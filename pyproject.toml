@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "transcribed-data"
+version = "0.1.0"
+description = ""
+authors = ["FabihaHaider <fabihahaider4@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+streamlit = "^1.37.1"
+lingua-language-detector = "^2.0.2"
+openai = "^1.42.0"
+python-dotenv = "^1.0.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
