@@ -8,6 +8,8 @@ from openai import OpenAI
 import json
 from prompts import system_prompt2, system_prompt3
 from dotenv import load_dotenv
+from parser import parse_transcripts
+from deepgrams import transcribe
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
@@ -17,7 +19,8 @@ detector = LanguageDetectorBuilder.from_all_spoken_languages().build()
 
 load_dotenv()
 API_KEY = os.getenv("OPENAI_API_KEY")
-st.header("Call Center")
+DG_API_KEY = os.getenv("DEEPGRAM_API_KEY")
+st.header("2. Upload Your Audio File")
 client = OpenAI(api_key=API_KEY)
 
 
@@ -131,7 +134,11 @@ def preprocess_audio(folder, conv_audio):
     # st.write(transcription)
     return transcription
 
-
+def updated_preprocess(filepath:str) -> str:
+    # print(filepath)
+    text_json = transcribe(filepath)
+    return text_json
+    
 
 def main():
     if "messages" not in st.session_state:
@@ -139,11 +146,11 @@ def main():
         
     
     with st.sidebar:
-        st.title("Menu:")
+        st.title("1. Preset Questions")
         
         # pdf_docs = st.file_uploader("Upload your PDF Files and Click on the Submit & Process Button", accept_multiple_files=True, key="pdf_uploader")
         preset_questions = st.file_uploader("Upload your file containing Preset Questions", accept_multiple_files=False, key="preset_questions_file_uploader", type=".txt")
-        submit_preset_btn =  st.button("Submit & Process")
+        submit_preset_btn =  st.button("Save the questions")
         
         if(submit_preset_btn and preset_questions is not None):
             #save the file in a folder
@@ -165,7 +172,7 @@ def main():
 
     # system prompt set
     
-    
+    # st.write("2. Upload your mp3 file")
     conv_audio = st.file_uploader("Upload your Audio File", accept_multiple_files=False, key="conv_file_uploader", type="mp3")
     if (conv_audio is not None):
         folder = "docs/conv/audio"
@@ -175,6 +182,10 @@ def main():
 
         with(st.spinner("Preprocessing...")):
             text = preprocess_audio(folder, conv_audio)
+            
+            # text = updated_preprocess(f"{folder}/{conv_audio.name}")
+            # st.write(text)
+            # text = conv_audio.read().decode('utf-8')
             if(text is not None):
                 lang = detect_language(text)
                 st.write("Language Detected: ", lang)
@@ -193,7 +204,7 @@ def main():
                 elif lang == "english":
                     sys_prompt = system_prompt2()
                 
-                st.write(sys_prompt)
+                # st.write(sys_prompt)
                 
                 if not any(m['role'] == 'system' for m in st.session_state.messages):
                     st.session_state.messages.insert(0, {"role": "system", "content": sys_prompt})
