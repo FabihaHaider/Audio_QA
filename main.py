@@ -10,6 +10,7 @@ from prompts import system_prompt2, system_prompt3
 from dotenv import load_dotenv
 from parser import parse_transcripts
 from deepgrams import transcribe
+from fpdf import FPDF, XPos, YPos
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
@@ -112,6 +113,30 @@ def read_preset_questions(folder_path):
     except Exception as e:
         st.error(f"An error occurred: {str(e)}")
 
+def generate_pdf_from_string(text, file_name):
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font("Arial", size=12)
+    pdf.multi_cell(0, 10, text)
+    
+    pdf.output(file_name)
+
+def generate_pdf_from_json(json_data, file_name):
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font("Helvetica", size=12)  # Use Helvetica instead of Arial
+    
+    qa_list = json_data['qa']
+    
+    for index, item in enumerate(qa_list, start=1):
+        question = item.get('question', 'No question provided')
+        answer = item.get('answer', 'No answer provided')
+        
+        pdf.cell(0, 10, f"Q{index}: {question}", new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+        pdf.multi_cell(0, 10, f"A{index}: {answer}", new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+        pdf.ln(5)  # Add some space between each Q&A pair
+
+    pdf.output(file_name)
 
 def preprocess_audio(folder, conv_audio):
 
@@ -132,12 +157,14 @@ def preprocess_audio(folder, conv_audio):
     response_format="text"
     )
     # st.write(transcription)
+    generate_pdf_from_string(transcription, "docs/conv/outputs.pdf")
     return transcription
 
 def updated_preprocess(filepath:str) -> str:
     # print(filepath)
-    text_json = transcribe(filepath)
-    return text_json
+    transcription = transcribe(filepath)
+    # generate_pdf_from_string(transcription, "docs/conv/outputs_deepgram.pdf")
+    return transcription
     
 
 def main():
@@ -181,10 +208,11 @@ def main():
             st.success("Audio File saved successfully.")
 
         with(st.spinner("Preprocessing...")):
-            text = preprocess_audio(folder, conv_audio)
+            # text = preprocess_audio(folder, conv_audio)
             
-            # text = updated_preprocess(f"{folder}/{conv_audio.name}")
-            # st.write(text)
+            text = updated_preprocess(f"{folder}/{conv_audio.name}")
+            st.text(text)  
+            # return
             # text = conv_audio.read().decode('utf-8')
             if(text is not None):
                 lang = detect_language(text)
@@ -231,6 +259,7 @@ def main():
                     message = json.loads(stream.choices[0].message.content)
                     
                     # print((message))
+                    generate_pdf_from_json(message, "docs/qna.pdf")
                     st.json(message)            
 
             # st.write("json files")
@@ -238,9 +267,6 @@ def main():
     
     
     
-
-                
-
 
 if __name__ == "__main__":
     main()
