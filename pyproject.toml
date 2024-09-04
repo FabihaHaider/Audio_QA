@@ -11,6 +11,7 @@ streamlit = "^1.37.1"
 lingua-language-detector = "^2.0.2"
 openai = "^1.42.0"
 python-dotenv = "^1.0.1"
+deepgram-sdk = "^3.5.1"
 
 
 [build-system]
