@@ -3,3 +3,4 @@ docs/
 audio_prepocess.py
 call_center.py
 ignore_folder/
+__pycache__
