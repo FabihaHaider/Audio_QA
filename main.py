@@ -8,8 +8,6 @@ from openai import OpenAI
 import json
 from prompts import system_prompt2, system_prompt3
 from dotenv import load_dotenv
-from deepgram_analytics import diarize_audio_file
-import pandas as pd
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
@@ -115,24 +113,15 @@ def preprocess_audio(folder, conv_audio):
         st.write(f"The maximum size of the audio file is 25MB. The uploaded file has {file_size_mb} MB")
         return
 
-    # file_path = os.path.join(folder, conv_audio.name)
-    # audio_file = open(file_path, "rb")
-    # transcription = client.audio.transcriptions.create(
-    # model="whisper-1", 
-    # file=audio_file, 
-    # response_format="text"
-    # )
-    
-    if(diarize_audio_file(folder)):
-        transcription = ""
-        diarized_file_path = "docs/conv/diarize.txt"
-        with open(diarized_file_path, 'r') as file:
-            transcription = file.read()
-                
-        # st.write(transcription)
-        return transcription
-    
-    return 
+    file_path = os.path.join(folder, conv_audio.name)
+    audio_file = open(file_path, "rb")
+    transcription = client.audio.transcriptions.create(
+    model="whisper-1", 
+    file=audio_file, 
+    response_format="text"
+    )
+    # st.write(transcription)
+    return transcription
 
 
 
@@ -228,9 +217,6 @@ def main():
 
                     with open('docs/questions_asked.json', 'w', encoding='utf-8') as f:
                         json.dump(message, f, indent=4, ensure_ascii=False)
-
-                    df = pd.read_json(r"docs/questions_asked.json")
-                    df.to_csv(r"docs/questions_asked.txt", index=False)
 
             
             else:
