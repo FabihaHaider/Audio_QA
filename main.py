@@ -76,6 +76,14 @@ def save_docs(doc, local_dir):
     
     return False
 
+preset_qs = ""
+
+def check_preset():
+    if preset_qs == "":
+        return False
+    else:
+        return True
+
 
 def read_preset_questions(folder_path):
     try:
@@ -158,7 +166,7 @@ def main():
     # system prompt set
     
     
-    conv_audio = st.file_uploader("Upload your Audio File", accept_multiple_files=False, key="conv_file_uploader", type=["mp3", "mp4"])
+    conv_audio = st.file_uploader("Upload your Audio File", accept_multiple_files=False, key="conv_file_uploader", type="mp3")
     if (conv_audio is not None):
         folder = "docs/conv/audio"
         
@@ -212,15 +220,9 @@ def main():
                     message = json.loads(stream.choices[0].message.content)
                     
                     # print((message))
+                    st.json(message)            
 
-                    st.json(message)
-
-                    with open('docs/questions_asked.json', 'w', encoding='utf-8') as f:
-                        json.dump(message, f, indent=4, ensure_ascii=False)
-
-            
-            else:
-                st.write("Error producing transcribed data from audio file.")
+            # st.write("json files")
 
     
     
