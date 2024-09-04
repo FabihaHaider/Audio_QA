@@ -1,0 +1,56 @@
+{
+  "qa": [
+    {
+      "question": "Vad förväntar sig kunden av avtalet?",
+      "answer": "Kunden förväntar sig bättre ljudkvalitet och täckning."
+    },
+    {
+      "question": "Antalet abonnemang?",
+      "answer": "Fem stycken."
+    },
+    {
+      "question": "Vilken leverantör/operatör kommer kunden flyttas/behållas hos?",
+      "answer": "Kunden har nyligen bytt till Tele 2."
+    },
+    {
+      "question": "Hur lång avtalsperiod?",
+      "answer": "Tre år."
+    },
+    {
+      "question": "Vilken månadskostnad förväntar kunden sig?",
+      "answer": "Ungefär 400 kronor i månaden."
+    },
+    {
+      "question": "Har kunden köpt växel?",
+      "answer": "Nej."
+    },
+    {
+      "question": "Har säljaren gått igenom hur växeln kommer fungera?",
+      "answer": "Nej, kunden har inte köpt någon växel."
+    },
+    {
+      "question": "Är kunden medveten om att de gjort en affär med GR8 Solutions, som återförsäljare?",
+      "answer": "Nej, det nämns inte i samtalet."
+    },
+    {
+      "question": "Har kunden och säljaren kommit överens om att avsluta abonnemang/tjänster?",
+      "answer": "Nej, det nämns inte i samtalet."
+    },
+    {
+      "question": "Har kunden och säljaren kommit överens om ifall säljaren/GR8, ska ersätta kunden för slutfaktura/utköp från befintlig leverantör/operatör?",
+      "answer": "Nej, det nämns inte i samtalet."
+    },
+    {
+      "question": "Innehåller överenskommelsen några hårdvaror som t.ex. telefoner, surfplattor, datorer eller andra produkter?",
+      "answer": "Nej."
+    },
+    {
+      "question": "När ska avtalet driftas/börja gälla?",
+      "answer": "Avtalet har redan börjat gälla, då kunden bytte till Tele 2 för fem månader sedan."
+    },
+    {
+      "question": "Har kunden några övriga förväntningar eller har några övriga överenskommelser gjorts?",
+      "answer": "Kunden förväntar sig att problemen med ljudkvalitet och täckning ska åtgärdas."
+    }
+  ]
+}
