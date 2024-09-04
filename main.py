@@ -80,14 +80,6 @@ def save_docs(doc, local_dir):
     
     return False
 
-preset_qs = ""
-
-def check_preset():
-    if preset_qs == "":
-        return False
-    else:
-        return True
-
 
 def read_preset_questions(folder_path):
     try:
