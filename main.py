@@ -155,7 +155,7 @@ def preprocess_audio(folder, conv_audio):
 def updated_preprocess(filepath:str) -> str:
     # print(filepath)
     transcription = transcribe(filepath)
-    # generate_pdf_from_string(transcription, "docs/conv/outputs_deepgram.pdf")
+    generate_pdf_from_string(transcription, "docs/conv/outputs_deepgram.pdf")
     return transcription
     
 
@@ -251,7 +251,7 @@ def main():
                     message = json.loads(stream.choices[0].message.content)
                     
                     # print((message))
-                    generate_pdf_from_json(message, "docs/qna.pdf")
+                    generate_pdf_from_json(message, "docs/deepgram_qna.pdf")
                     st.json(message)            
 
             # st.write("json files")

@@ -25,7 +25,7 @@ def transcribe(FILE_PATH: str):
         }
 
         options = PrerecordedOptions(
-            model="whisper-medium",
+            model="nova-2",
             smart_format=True,
             language="sv",
             utterances=True,
