@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  server:
+    build:
+      context: .
+    container_name: audio-qa
+    ports:
+      - "8880:8501"
+    networks:
+      - app-network
+    # environment:
+    #   - SERVER_PORT=$SERVER_PORT
+
+networks:
+  app-network:
+    driver: bridge
